@@ -184,3 +184,21 @@ BODY {
     background-color: #d5d5d5;
     margin: 4px;
 }
+
+.btn:hover {
+    background-color: #c0c0c0;
+}
+
+.btn:active {
+    background-color: #a9a9a9;
+}
+
+.btn:disabled {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+}
+
+.btn-sqrt {
+    background-color: #ffcc00;
+    color: #000000;
+}

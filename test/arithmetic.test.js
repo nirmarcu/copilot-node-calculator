@@ -118,7 +118,91 @@ describe('Arithmetic', function () {
     });
 
 // TODO: Challenge #1
- 
+    describe('Subtraction', function () {
+        it('subtracts two positive integers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=21&operand2=21')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('subtracts zero from an integer', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=42&operand2=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 42 });
+                    done();
+                });
+        });
+        it('subtracts a negative integer from a positive integer', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=21&operand2=-42')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 63 });
+                    done();
+                });
+        });
+        it('subtracts two negative integers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=-21&operand2=-21')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('subtracts an integer from a floating point number', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=2.5&operand2=-5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 7.5 });
+                    done();
+                });
+        });
+        it('subtracts with negative exponent', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=1.2e-5&operand2=-1.2e-5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 2.4e-5 });
+                    done();
+                });
+        });
+    });
+
+    describe('Square Root', function () {
+        it('calculates the square root of a positive integer', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=16')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 4 });
+                    done();
+                });
+        });
+        it('calculates the square root of zero', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('calculates the square root of a floating point number', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=2.25')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 1.5 });
+                    done();
+                });
+        });
+        it('calculates the square root of a negative number', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=-4')
+                .expect(400)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ error: "Invalid operand1: -4" });
+                    done();
+                });
+        });
+    });
 
     describe('Multiplication', function () {
         it('multiplies two positive integers', function (done) {
