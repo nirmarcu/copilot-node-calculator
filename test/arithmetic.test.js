@@ -9,7 +9,7 @@ describe('Arithmetic', function () {
                 });
         });
         it('rejects invalid operation', function (done) {
-            request.get('/arithmetic?operation=foobar&operand1=21&operand2=21')
+            request.get('/arithmetic?operand1=21&operand2=21&operation=foobar')
                 .expect(400)
                 .end(function (err, res) {
                     expect(res.body).to.eql({ error: "Invalid operation: foobar" });
@@ -88,6 +88,30 @@ describe('Arithmetic', function () {
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('adds with power operation', function (done) {
+            request.get('/arithmetic?operation=power&operand1=2&operand2=3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 8 });
+                    done();
+                });
+        });
+        it('adds with power operation with negative exponent', function (done) {
+            request.get('/arithmetic?operation=power&operand1=2&operand2=-3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0.125 });
+                    done();
+                });
+        });
+        it('adds with power operation with zero exponent', function (done) {
+            request.get('/arithmetic?operation=power&operand1=2&operand2=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 1 });
                     done();
                 });
         });
